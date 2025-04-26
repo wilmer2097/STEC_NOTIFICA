@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "133178926474",
+    "project_id": "flutter-push-c35bc",
+    "storage_bucket": "flutter-push-c35bc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:133178926474:android:74c214a39144329af35473",
+        "android_client_info": {
+          "package_name": "com.example.stec_notifica"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq6FXZCAC6gCy8qxKmO_ct5_oRyUCmHQw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
