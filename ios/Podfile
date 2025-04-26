@@ -1,0 +1,69 @@
+# -*- Podfile -*-  |  Flutter 3.22  |  Xcode 15+
+# --------------------------------------------------------------------
+# 1️⃣  Versión mínima de iOS compatible con Firebase / local_auth, etc.
+platform :ios, '14.0'
+
+# 2️⃣  Desactiva métricas de CocoaPods (evita tráfico innecesario)
+ENV['COCOAPODS_DISABLE_STATS'] = 'true'
+
+# 3️⃣  Firma de códigos en paralelo → compila bastante más rápido (Big Sur+)
+ENV['COCOAPODS_PARALLEL_CODE_SIGN'] = 'true'
+
+# Mapa de configuraciones del proyecto Flutter
+project 'Runner', {
+  'Debug'   => :debug,
+  'Profile' => :release,
+  'Release' => :release,
+}
+
+# Función para ubicar la raíz de Flutter
+def flutter_root
+  gen = File.expand_path(File.join('..', 'Flutter', 'Generated.xcconfig'), __FILE__)
+  raise "#{gen} missing. Run 'flutter pub get'." unless File.exist?(gen)
+
+  File.foreach(gen) { |l| return $1.strip if l =~ /FLUTTER_ROOT\=(.*)/ }
+  raise 'FLUTTER_ROOT not found. Delete Generated.xcconfig & run flutter pub get.'
+end
+
+require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
+
+# --------------------------------------------------------------------
+flutter_ios_podfile_setup
+
+target 'Runner' do
+  # Frameworks estáticos: evita duplicados y reduce el tamaño del IPA.
+  use_frameworks! :linkage => :static
+
+  flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+
+  # Target de tests (opcional)
+  target 'RunnerTests' do
+    inherit! :search_paths
+  end
+
+  # --- Flipper (Debug) ------------------------------------------------
+  # Uncomment para usar Flipper (inspector nativo); requiere iOS 14 +
+  # if ENV['FLUTTER_ENABLED_FLIPPER'] == 'true'
+  #   use_flipper!({ 'Flipper-Folly' => '2.6.10' })   # versión típica
+  # end
+  # --------------------------------------------------------------------
+end
+
+# --------------------------------------------------------------------
+post_install do |installer|
+  # Itera sobre todos los pods
+  installer.pods_project.targets.each do |t|
+    flutter_additional_ios_build_settings(t)
+
+    t.build_configurations.each do |config|
+      # 4️⃣  Fuerza iOS 14 en TODOS los pods (elimina warnings 9.0/11.0)
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
+
+      # 5️⃣  Excluye arm64 SOLO en simulador Apple Silicon
+      if RUBY_PLATFORM.include?('arm64') && config.name == 'Debug'
+        config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'arm64'
+      end
+    end
+  end
+end
+# --------------------------------------------------------------------
