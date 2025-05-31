@@ -1,0 +1,1 @@
+C:\FLY2W 365\flutter\stec_notifica\build\app\intermediates\cxx\RelWithDebInfo\4b5l4e66\obj\arm64-v8a

@@ -1,0 +1,2 @@
+C:/FLY2W 365/flutter/stec_notifica/android/app/.cxx/RelWithDebInfo/4b5l4e66/x86/CMakeFiles/edit_cache.dir
+C:/FLY2W 365/flutter/stec_notifica/android/app/.cxx/RelWithDebInfo/4b5l4e66/x86/CMakeFiles/rebuild_cache.dir
