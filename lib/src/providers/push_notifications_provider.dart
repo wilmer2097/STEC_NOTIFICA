@@ -198,13 +198,3 @@ class PushNotificationsProvider {
   }
 }
 
-/*
-  NOTA:
-  • Asegúrate de:
-    – Tener 'notification_icon.png' en 'android/app/src/main/res/drawable/'.
-    – Declarar en AndroidManifest.xml:
-        <meta-data android:name="com.google.firebase.messaging.default_notification_icon"
-                   android:resource="@drawable/notification_icon"/>
-        <meta-data android:name="com.google.firebase.messaging.default_notification_color"
-                   android:resource="@color/colorPrimary"/>
-*/
